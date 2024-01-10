@@ -1,0 +1,11 @@
+PROFILES_ACTIVE: local
+
+DB_HOST: localhost
+DB_PORT: 5432
+DB_DATABASE: postgres
+DB_USERNAME: postgres
+DB_PASSWORD: root
+
+HSM_URL: http://localhost:8086/hsm
+HSM_SIGN_ENDPOINT: /sign
+HSM_VERIFY_ENDPOINT: /verify?keyName=app
