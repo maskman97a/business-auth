@@ -9,6 +9,8 @@ import (
 
 type Environment struct {
 	ServerPort uint
+
+	ContextPath string
 }
 
 func ConfigAppEnv() Environment {
@@ -37,5 +39,5 @@ func ConfigAppEnv() Environment {
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("Config file changed:", e.Name)
 	})
-	return Environment{ServerPort: viper.GetUint("SERVER_PORT")}
+	return Environment{ServerPort: viper.GetUint("SERVER_PORT"), ContextPath: viper.GetString("context-path")}
 }

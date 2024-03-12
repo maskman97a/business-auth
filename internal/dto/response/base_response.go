@@ -2,7 +2,6 @@ package response
 
 import (
 	"business-auth/internal/constants"
-	"business-auth/pkg/utils/time_utils"
 	"time"
 )
 
@@ -15,5 +14,5 @@ type BaseResponse struct {
 }
 
 func NewBaseResponse(code int, msg string, signature string, data string) *BaseResponse {
-	return &BaseResponse{Code: code, Message: msg, Signature: signature, Data: data, ResponseTime: time_utils.ToString(time.Now(), constants.DateTimestampPattern)}
+	return &BaseResponse{Code: code, Message: msg, Signature: signature, Data: data, ResponseTime: time.Now().Format(constants.DateTimestampPattern)}
 }

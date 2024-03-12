@@ -14,6 +14,8 @@ const (
 
 	SucessMsg = "Success"
 	FailedMsg = "Failed"
+
+	ErrorContentType = 415
 )
 
 var MapErrorCode = map[int]string{

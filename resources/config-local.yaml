@@ -1,11 +1,13 @@
 PROFILES_ACTIVE: local
 
-DB_HOST: localhost
-DB_PORT: 5432
-DB_DATABASE: postgres
-DB_USERNAME: postgres
-DB_PASSWORD: root
+DB_HOST: 100.96.1.4
+DB_PORT: 1521
+DB_SERVICE: xe
+DB_USERNAME: business_core
+DB_PASSWORD: Business@123
 
 HSM_URL: http://localhost:8086/hsm
 HSM_SIGN_ENDPOINT: /sign
 HSM_VERIFY_ENDPOINT: /verify?keyName=app
+
+SECRET_KEY: 159357

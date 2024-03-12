@@ -1,9 +1,9 @@
 package main
 
-import "business-auth/conf"
+import "business-auth/config"
 
 func main() {
-	app := conf.NewApp()
+	app := config.NewApp()
 	app.Init()
 	app.Run()
 }

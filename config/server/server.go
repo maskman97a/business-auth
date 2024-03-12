@@ -1,7 +1,7 @@
 package server
 
 import (
-	"business-auth/conf/http_server"
+	"business-auth/config/http_server"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -15,16 +15,20 @@ const defaultHost = "0.0.0.0"
 type HttpServer interface {
 	Start()
 	Stop()
+
+	GetContextPath() string
 }
 
 type httpServer struct {
-	Port   uint
-	server *http.Server
+	Port        uint
+	server      *http.Server
+	ContextPath string
 }
 
 func NewHttpServer(router *gin.Engine, config http_server.HttpServerConfig) HttpServer {
 	return &httpServer{
-		Port: config.Port,
+		ContextPath: config.ContextPath,
+		Port:        config.Port,
 		server: &http.Server{
 			Addr:    fmt.Sprintf("%s:%d", defaultHost, config.Port),
 			Handler: router,
@@ -53,4 +57,8 @@ func (httpServer httpServer) Stop() {
 	if err := httpServer.server.Shutdown(ctx); err != nil {
 		log.Fatalf("Server forced to shutdown err=%s", err.Error())
 	}
+}
+
+func (httpServer httpServer) GetContextPath() string {
+	return httpServer.ContextPath
 }

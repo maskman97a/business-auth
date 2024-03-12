@@ -1,43 +1,31 @@
-package repository_impl
+package repository
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/lib/pq"
+	go_ora "github.com/sijms/go-ora/v2"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"gorm.io/driver/postgres"
 	_ "gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"log"
 	"time"
 )
 
 type DbOption struct {
-	Host     string
-	Port     string
-	Database string
-	Username string
-	Password string
+	Host    string
+	Port    int
+	Service string
+	User    string
+	Pwd     string
 }
 
-func NewGormDB(cfg *DbOption) *gorm.DB {
-	connStr := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
-		cfg.Host, cfg.Port, cfg.Username, cfg.Database, cfg.Password)
-	logrus.Info("connection string: ", connStr)
-	db, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	return db
-}
-func NewSQLDB(gormDB *gorm.DB) (*sql.DB, error) {
-	sqlDB, err := gormDB.DB()
+func NewSQLDB(cfg *DbOption) (*sql.DB, error) {
+	connStr := go_ora.BuildUrl(cfg.Host, cfg.Port, cfg.Service, cfg.User, cfg.Pwd, nil)
+	sqlDB, err := sql.Open("oracle", connStr)
 	if err != nil {
 		logrus.Error(err)
 		return nil, err
 	} else {
-		logrus.Info("Connection to database successful")
+		logrus.Info("Connected to database")
 	}
 	// SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
 	sqlDB.SetMaxIdleConns(viper.GetInt("MAX_IDLE_CONNS"))
@@ -58,11 +46,11 @@ func NewSQLDB(gormDB *gorm.DB) (*sql.DB, error) {
 
 func ProvideConfig() *DbOption {
 	dbOption := &DbOption{
-		Host:     viper.GetString("DB_HOST"),
-		Port:     viper.GetString("DB_PORT"),
-		Database: viper.GetString("DB_DATABASE"),
-		Username: viper.GetString("DB_USERNAME"),
-		Password: viper.GetString("DB_PASSWORD"),
+		Host:    viper.GetString("DB_HOST"),
+		Port:    viper.GetInt("DB_PORT"),
+		Service: viper.GetString("DB_SERVICE"),
+		User:    viper.GetString("DB_USERNAME"),
+		Pwd:     viper.GetString("DB_PASSWORD"),
 	}
 	return dbOption
 }
