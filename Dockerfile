@@ -9,5 +9,5 @@ ENV APP_HOME /go/src/bussiness-auth
 RUN mkdir -p "$APP_HOME"
 
 WORKDIR "$APP_HOME"
-EXPOSE 8015
+EXPOSE 8010
 CMD ["bee", "run"]
