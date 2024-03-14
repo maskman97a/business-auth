@@ -8,6 +8,6 @@ ENV GOFLAGS=-mod=vendor
 ENV APP_HOME /go/src/bussiness-auth
 RUN mkdir -p "$APP_HOME"
 
-WORKDIR "$APP_HOME/cmd"
+WORKDIR "$APP_HOME"
 EXPOSE 8010
 CMD ["bee", "run"]
