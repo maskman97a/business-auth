@@ -6,7 +6,7 @@ ENV GO111MODULE=on
 ENV GOFLAGS=-mod=vendor
 
 ENV APP_HOME /go/src/bussiness-auth
-RUN sudo mkdir -p "$APP_HOME"
+RUN mkdir -p "$APP_HOME"
 
 WORKDIR "$APP_HOME/cmd"
 EXPOSE 8010
