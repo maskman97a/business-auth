@@ -28,7 +28,7 @@ spec:
               value: "5432"
             - name: PGUSER
               value: postgres
-          image: ${{vars.DOCKER_USERNAME}}/${{github.event.repository.name}}:latest
+          image: tungpham2311/business-auth:latest
           name: server
           imagePullPolicy: Always
           ports:
@@ -50,7 +50,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: "8080"
+    - name: "8010"
       port: 8010
       targetPort: 8010
       nodePort: 30001
