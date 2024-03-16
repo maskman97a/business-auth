@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-auth
+  labels:
+    app: business-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: business-auth
+  template:
+    metadata:
+      labels:
+        app: business-auth
+    spec:
+      containers:
+        - name: business-auth
+          image: tungpham2311/business-auth:latest
+          ports:
+            - containerPort: 8010
+          imagePullPolicy: Always
