@@ -30,16 +30,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    service: business-auth
   name: business-auth-service
 spec:
   type: NodePort
   ports:
     - name: http
-      port: 8010
+      port: 9010
       targetPort: 8010
   selector:
     app: business-auth
-status:
-  loadBalancer: {}
