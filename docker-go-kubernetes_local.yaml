@@ -17,11 +17,11 @@ spec:
           image: business-auth-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8010  # Should match the port number that the Go application listens on
+            - containerPort: 8080  # Should match the port number that the Go application listens on
           livenessProbe: # To check the health of the Pod
             httpGet:
               path: /actuator/health
-              port: 8010
+              port: 8080
               scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 15

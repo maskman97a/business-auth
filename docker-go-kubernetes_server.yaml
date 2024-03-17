@@ -1,22 +1,28 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment                 # Type of Kubernetes resource
 metadata:
-  name: business-auth
-  labels:
-    app: business-auth
+  name: business-auth           # Name of the Kubernetes resource
 spec:
-  replicas: 1
+  replicas: 3                    # Number of pods to run at any given time
   selector:
     matchLabels:
-      app: business-auth
-  template:
+      app: business-auth        # This deployment applies to any Pods matching the specified label
+  template: # This deployment will create a set of pods using the configurations in this template
     metadata:
-      labels:
+      labels: # The labels that will be applied to all of the pods in this deployment
         app: business-auth
-    spec:
+    spec: # Spec for the container which will run in the Pod
       containers:
         - name: business-auth
           image: tungpham2311/business-auth:latest
-          ports:
-            - containerPort: 8010
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8010  # Should match the port number that the Go application listens on
+          livenessProbe: # To check the health of the Pod
+            httpGet:
+              path: /actuator/health
+              port: 8010
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 5
