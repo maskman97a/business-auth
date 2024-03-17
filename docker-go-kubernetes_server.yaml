@@ -32,16 +32,14 @@ kind: Service
 metadata:
   labels:
     service: business-auth
-  name: business-auth
-  namespace: default
+  name: business-auth-service
 spec:
   type: NodePort
   ports:
-    - name: "8010"
+    - name: http
       port: 8010
       targetPort: 8010
-      nodePort: 30001
   selector:
-    service: business-auth
+    app: business-auth
 status:
   loadBalancer: {}
