@@ -70,8 +70,9 @@ func (app *app) Init() {
 	app.gin.Use(gin.Recovery())
 
 	providerConfig := repository.ProvideConfig()
+	app.gormDB = repository.NewGormDB(providerConfig)
 
-	app.db, _ = repository.NewSQLDB(providerConfig)
+	app.db, _ = repository.NewSQLDB(app.gormDB, providerConfig)
 
 	app.httpServer = server.NewHttpServer(
 		app.gin,

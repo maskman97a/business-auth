@@ -18,6 +18,9 @@ func ConfigAppEnv() Environment {
 	viper.AutomaticEnv()
 
 	env := viper.GetString("ENVIRONMENT")
+	if env == "" {
+		env = "default"
+	}
 	logrus.Info("Current environment:", env)
 
 	viper.AddConfigPath("./resources")
@@ -29,12 +32,12 @@ func ConfigAppEnv() Environment {
 	}
 
 	viper.SetConfigName("config-" + env)
-
-	err := viper.MergeInConfig()
-	if err != nil {
-		fmt.Println("environment config file not found")
+	if env != "default" {
+		err := viper.MergeInConfig()
+		if err != nil {
+			fmt.Println("environment config file not found")
+		}
 	}
-
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("Config file changed:", e.Name)
